@@ -1,6 +1,5 @@
 
 link_libraries(glfw)
-
 include_directories("${GLFW_SOURCE_DIR}/deps")
 
 if (MATH_LIBRARY)

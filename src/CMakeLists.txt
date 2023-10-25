@@ -1,4 +1,4 @@
-
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 add_library(glfw ${GLFW_LIBRARY_TYPE}
                  "${GLFW_SOURCE_DIR}/include/GLFW/glfw3.h"
                  "${GLFW_SOURCE_DIR}/include/GLFW/glfw3native.h"
@@ -29,11 +29,11 @@ add_custom_target(update_mappings
 
 set_target_properties(update_mappings PROPERTIES FOLDER "GLFW3")
 
-if (GLFW_BUILD_COCOA)
+if (1)
     target_compile_definitions(glfw PRIVATE _GLFW_COCOA)
     target_sources(glfw PRIVATE cocoa_platform.h cocoa_joystick.h cocoa_init.m
                                 cocoa_joystick.m cocoa_monitor.m cocoa_window.m
-                                nsgl_context.m)
+                                oxidegl_context.c)
 endif()
 
 if (GLFW_BUILD_WIN32)
@@ -157,9 +157,11 @@ if (GLFW_BUILD_WIN32)
 endif()
 
 if (GLFW_BUILD_COCOA)
-    target_link_libraries(glfw PRIVATE "-framework Cocoa"
+    target_link_libraries(glfw PRIVATE "-L /usr/local/lib -loxidegl"
+                                       "-framework Cocoa"
                                        "-framework IOKit"
-                                       "-framework CoreFoundation")
+                                       "-framework CoreFoundation"
+                                       )
 
     set(glfw_PKG_DEPS "")
     set(glfw_PKG_LIBS "-framework Cocoa -framework IOKit -framework CoreFoundation")
