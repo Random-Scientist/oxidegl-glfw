@@ -336,7 +336,6 @@ GLFWbool _glfwRefreshContextAttribs(_GLFWwindow *window,
     glfwMakeContextCurrent((GLFWwindow *)previous);
     return GLFW_FALSE;
   }
-  printf("%s\n", version);
 
   for (i = 0; prefixes[i]; i++) {
     const size_t length = strlen(prefixes[i]);
@@ -496,7 +495,7 @@ GLFWbool _glfwRefreshContextAttribs(_GLFWwindow *window,
     if (window->doublebuffer)
       window->context.swapBuffers(window);
   }
-
+  printf("makecontextcurrent called\n");
   glfwMakeContextCurrent((GLFWwindow *)previous);
   return GLFW_TRUE;
 }

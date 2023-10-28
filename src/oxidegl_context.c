@@ -13,6 +13,7 @@
 
 static void makeContextCurrentOxideGL(_GLFWwindow *window) {
   oxidegl_set_current_context(window->context.oxidegl.id);
+  _glfwPlatformSetTls(&_glfw.contextSlot, window);
 }
 
 static void swapBuffersOxideGL(_GLFWwindow *window) {

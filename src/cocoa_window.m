@@ -814,11 +814,9 @@ GLFWbool _glfwCreateWindowCocoa(_GLFWwindow *window,
           return GLFW_FALSE;
         }
       }
-      printf("refreshcontextcfg\n");
       if (!_glfwRefreshContextAttribs(window, ctxconfig)) {
         return GLFW_FALSE;
       }
-      printf("post");
     }
 
     if (wndconfig->mousePassthrough)
@@ -838,7 +836,7 @@ GLFWbool _glfwCreateWindowCocoa(_GLFWwindow *window,
           _glfwFocusWindowCocoa(window);
       }
     }
-
+    printf("window created\n");
     return GLFW_TRUE;
 
   } // autoreleasepool
