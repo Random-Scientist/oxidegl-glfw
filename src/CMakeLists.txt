@@ -29,12 +29,10 @@ add_custom_target(update_mappings
 
 set_target_properties(update_mappings PROPERTIES FOLDER "GLFW3")
 
-if (1)
-    target_compile_definitions(glfw PRIVATE _GLFW_COCOA)
+target_compile_definitions(glfw PRIVATE _GLFW_COCOA)
     target_sources(glfw PRIVATE cocoa_platform.h cocoa_joystick.h cocoa_init.m
                                 cocoa_joystick.m cocoa_monitor.m cocoa_window.m
                                 oxidegl_context.c)
-endif()
 
 if (GLFW_BUILD_WIN32)
     target_compile_definitions(glfw PRIVATE _GLFW_WIN32)

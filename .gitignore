@@ -42,6 +42,7 @@ CMakeDoxyfile.in
 CMakeDoxygenDefaults.cmake
 cmake_install.cmake
 cmake_uninstall.cmake
+compile_commands.json
 
 # Generated files
 docs/Doxyfile
@@ -103,3 +104,4 @@ tests/windows
 
 .cache
 
+compile_commands.json
