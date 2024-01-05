@@ -70,7 +70,7 @@ GLFWbool _glfwCreateContextOxideGL(_GLFWwindow *window,
   if (ctxconfig->client == GLFW_OPENGL_ES_API)
   {
     _glfwInputError(GLFW_API_UNAVAILABLE,
-                    "OxideGL: GLES is not available on macOS");
+                    "OxideGL: oxideGL does not support GLES");
     return GLFW_FALSE;
   }
 
