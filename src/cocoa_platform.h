@@ -152,7 +152,7 @@ typedef struct _GLFWlibraryNSGL
 //
 typedef struct _GLFWcontext_oxidegl
 {
-  uint32_t ctx;
+  void *ctx;
 } _GLFWcontext_oxidegl;
 
 // OxideGL-specific global data
