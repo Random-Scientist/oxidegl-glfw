@@ -208,6 +208,7 @@ static const NSRange kEmptyRange = {NSNotFound, 0};
 - (void)windowDidResize:(NSNotification *)notification {
   if (window->context.source == GLFW_NATIVE_CONTEXT_API) {
     // LOOKHERE
+    // TODO oxidegl window resizing
     //[window->context.nsgl.object update];
   }
 
