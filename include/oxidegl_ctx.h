@@ -1,6 +1,6 @@
+#include "internal.h"
 #include <_types/_uint32_t.h>
 #include <stdint.h>
-typedef uint32_t GLenum;
 
 void oxidegl_set_current_context(void *ctxid);
 void oxidegl_swap_buffers(void *ctxid);

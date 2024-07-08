@@ -73,11 +73,16 @@ typedef struct _GLFWjoystick _GLFWjoystick;
 typedef struct _GLFWtls _GLFWtls;
 typedef struct _GLFWmutex _GLFWmutex;
 
+#if defined(GL_VERSION) == 0
 #define GL_VERSION 0x1f02
+#endif
+#if defined(GL_EXTENSIONS) == 0
+#define GL_EXTENSIONS 0x1f03
+#endif
+
 #define GL_NONE 0
 #define GL_COLOR_BUFFER_BIT 0x00004000
 #define GL_UNSIGNED_BYTE 0x1401
-#define GL_EXTENSIONS 0x1f03
 #define GL_NUM_EXTENSIONS 0x821d
 #define GL_CONTEXT_FLAGS 0x821e
 #define GL_CONTEXT_FLAG_FORWARD_COMPATIBLE_BIT 0x00000001
