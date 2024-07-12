@@ -79,8 +79,6 @@ GLFWbool _glfwCreateContextOxideGL(_GLFWwindow *window,
     return GLFW_FALSE;
   }
 
-  printf("created oxidegl context\n");
-
   window->context.oxidegl.ctx =
       oxidegl_create_context(window->ns.view, GL_BGRA, GL_UNSIGNED_INT,
                              GL_DEPTH_COMPONENT, GL_FLOAT, 0, 0);
