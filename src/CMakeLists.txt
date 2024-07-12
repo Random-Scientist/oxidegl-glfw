@@ -155,7 +155,7 @@ if (GLFW_BUILD_WIN32)
 endif()
 
 if (GLFW_BUILD_COCOA)
-    target_link_libraries(glfw PRIVATE "-L /usr/local/lib -loxidegl"
+    target_link_libraries(glfw PRIVATE #"-L /usr/local/lib -loxidegl"
                                        "-framework Cocoa"
                                        "-framework IOKit"
                                        "-framework CoreFoundation"

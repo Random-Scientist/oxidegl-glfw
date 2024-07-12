@@ -12,12 +12,12 @@
 #define GL_FLOAT 0x1406
 
 static void makeContextCurrentOxideGL(_GLFWwindow *window) {
-  oxidegl_set_current_context(window->context.oxidegl.ctx);
+  _glfw.oxidegl.make_context_current(window->context.oxidegl.ctx);
   _glfwPlatformSetTls(&_glfw.contextSlot, window);
 }
 
 static void swapBuffersOxideGL(_GLFWwindow *window) {
-  oxidegl_swap_buffers(window->context.oxidegl.ctx);
+  _glfw.oxidegl.swap_buffers(window->context.oxidegl.ctx);
 }
 
 static void swapIntervalOxideGL(int interval) {}
@@ -52,7 +52,21 @@ GLFWbool _glfwInitOxideGL(void) {
                     "OxideGL: Failed to load liboxidegl.dylib");
     return GLFW_FALSE;
   }
-  oxidegl_platform_init();
+  _glfw.oxidegl.platform_init = getProcAddressOxideGL("oxidegl_platform_init");
+  assert(_glfw.oxidegl.platform_init);
+
+  _glfw.oxidegl.make_context_current =
+      (void (*)(void *))getProcAddressOxideGL("oxidegl_set_current_context");
+  assert(_glfw.oxidegl.make_context_current);
+
+  _glfw.oxidegl.swap_buffers =
+      (void (*)(void *))getProcAddressOxideGL("oxidegl_swap_buffers");
+  assert(_glfw.oxidegl.swap_buffers);
+
+  _glfw.oxidegl.create_context =
+      (OXIDEGLCREATECTXPROC)getProcAddressOxideGL("oxidegl_create_context");
+  assert(_glfw.oxidegl.create_context);
+  _glfw.oxidegl.platform_init();
   return GLFW_TRUE;
 }
 
@@ -80,8 +94,8 @@ GLFWbool _glfwCreateContextOxideGL(_GLFWwindow *window,
   }
 
   window->context.oxidegl.ctx =
-      oxidegl_create_context(window->ns.view, GL_BGRA, GL_UNSIGNED_INT,
-                             GL_DEPTH_COMPONENT, GL_FLOAT, 0, 0);
+      _glfw.oxidegl.create_context(window->ns.view, GL_BGRA, GL_UNSIGNED_INT,
+                                   GL_DEPTH_COMPONENT, GL_FLOAT, 0, 0);
 
   if (window->context.oxidegl.ctx == 0) {
     _glfwInputError(GLFW_VERSION_UNAVAILABLE,

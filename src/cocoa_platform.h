@@ -61,7 +61,7 @@ typedef void *id;
 #define NSEventModifierFlagCapsLock NSAlphaShiftKeyMask
 #define NSEventModifierFlagCommand NSCommandKeyMask
 #define NSEventModifierFlagControl NSControlKeyMask
-#define NSEventModifierFlagDeviceIndependentFlagsMask \
+#define NSEventModifierFlagDeviceIndependentFlagsMask                          \
   NSDeviceIndependentModifierFlagsMask
 #define NSEventModifierFlagOption NSAlternateKeyMask
 #define NSEventModifierFlagShift NSShiftKeyMask
@@ -85,16 +85,14 @@ typedef void *id;
 typedef VkFlags VkMacOSSurfaceCreateFlagsMVK;
 typedef VkFlags VkMetalSurfaceCreateFlagsEXT;
 
-typedef struct VkMacOSSurfaceCreateInfoMVK
-{
+typedef struct VkMacOSSurfaceCreateInfoMVK {
   VkStructureType sType;
   const void *pNext;
   VkMacOSSurfaceCreateFlagsMVK flags;
   const void *pView;
 } VkMacOSSurfaceCreateInfoMVK;
 
-typedef struct VkMetalSurfaceCreateInfoEXT
-{
+typedef struct VkMetalSurfaceCreateInfoEXT {
   VkStructureType sType;
   const void *pNext;
   VkMetalSurfaceCreateFlagsEXT flags;
@@ -122,10 +120,10 @@ typedef VkResult(APIENTRY *PFN_vkCreateMetalSurfaceEXT)(
 #define GLFW_OXIDEGL_LIBRARY_CONTEXT_STATE _GLFWlibrary_oxidegl oxidegl;
 
 // HIToolbox.framework pointer typedefs
-#define kTISPropertyUnicodeKeyLayoutData \
+#define kTISPropertyUnicodeKeyLayoutData                                       \
   _glfw.ns.tis.kPropertyUnicodeKeyLayoutData
 typedef TISInputSourceRef (*PFN_TISCopyCurrentKeyboardLayoutInputSource)(void);
-#define TISCopyCurrentKeyboardLayoutInputSource \
+#define TISCopyCurrentKeyboardLayoutInputSource                                \
   _glfw.ns.tis.CopyCurrentKeyboardLayoutInputSource
 typedef void *(*PFN_TISGetInputSourceProperty)(TISInputSourceRef, CFStringRef);
 #define TISGetInputSourceProperty _glfw.ns.tis.GetInputSourceProperty
@@ -134,38 +132,41 @@ typedef UInt8 (*PFN_LMGetKbdType)(void);
 
 // NSGL-specific per-context data
 //
-typedef struct _GLFWcontextNSGL
-{
+typedef struct _GLFWcontextNSGL {
   id pixelFormat;
   id object;
 } _GLFWcontextNSGL;
 
 // NSGL-specific global data
 //
-typedef struct _GLFWlibraryNSGL
-{
+typedef struct _GLFWlibraryNSGL {
   // dlopen handle for OpenGL.framework (for glfwGetProcAddress)
   CFBundleRef framework;
 } _GLFWlibraryNSGL;
 
 // OxideGL-specific per-context data
 //
-typedef struct _GLFWcontext_oxidegl
-{
+typedef struct _GLFWcontext_oxidegl {
   void *ctx;
 } _GLFWcontext_oxidegl;
 
+#define OXIDEGLCREATECTXPROC                                                   \
+  void *(*)(void *, GLenum, GLenum, GLenum, GLenum, GLenum, GLenum)
 // OxideGL-specific global data
 //
-typedef struct _GLFWlibrary_oxidegl
-{
+typedef struct _GLFWStatic_oxidegl {
   void *handle;
+  void (*platform_init)();
+  void (*make_context_current)(void *ctx);
+  void (*swap_buffers)(void *ctx);
+  void *(*create_context)(void *view, GLenum format, GLenum type,
+                          GLenum depth_format, GLenum depth_type,
+                          GLenum stencil_format, GLenum stencil_type);
 } _GLFWlibrary_oxidegl;
 
 // Cocoa-specific per-window data
 //
-typedef struct _GLFWwindowNS
-{
+typedef struct _GLFWwindowNS {
   id object;
   id delegate;
   id view;
@@ -188,8 +189,7 @@ typedef struct _GLFWwindowNS
 
 // Cocoa-specific global data
 //
-typedef struct _GLFWlibraryNS
-{
+typedef struct _GLFWlibraryNS {
   CGEventSourceRef eventSource;
   id delegate;
   GLFWbool cursorHidden;
@@ -210,8 +210,7 @@ typedef struct _GLFWlibraryNS
   // The window whose disabled cursor mode is active
   _GLFWwindow *disabledCursorWindow;
 
-  struct
-  {
+  struct {
     CFBundleRef bundle;
     PFN_TISCopyCurrentKeyboardLayoutInputSource
         CopyCurrentKeyboardLayoutInputSource;
@@ -223,8 +222,7 @@ typedef struct _GLFWlibraryNS
 
 // Cocoa-specific per-monitor data
 //
-typedef struct _GLFWmonitorNS
-{
+typedef struct _GLFWmonitorNS {
   CGDirectDisplayID displayID;
   CGDisplayModeRef previousMode;
   uint32_t unitNumber;
@@ -234,8 +232,7 @@ typedef struct _GLFWmonitorNS
 
 // Cocoa-specific per-cursor data
 //
-typedef struct _GLFWcursorNS
-{
+typedef struct _GLFWcursorNS {
   id object;
 } _GLFWcursorNS;
 

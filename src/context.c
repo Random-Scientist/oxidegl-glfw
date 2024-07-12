@@ -315,11 +315,9 @@ GLFWbool _glfwRefreshContextAttribs(_GLFWwindow *window,
   previous = _glfwPlatformGetTls(&_glfw.contextSlot);
 
   glfwMakeContextCurrent((GLFWwindow *)window);
-  uint flags;
+
   window->context.GetIntegerv =
       (PFNGLGETINTEGERVPROC)window->context.getProcAddress("glGetIntegerv");
-  window->context.GetIntegerv(GL_CONTEXT_FLAGS, (GLint *)&flags);
-  printf("flags: %i", flags);
 
   window->context.GetString =
       (PFNGLGETSTRINGPROC)window->context.getProcAddress("glGetString");
@@ -330,7 +328,6 @@ GLFWbool _glfwRefreshContextAttribs(_GLFWwindow *window,
     return GLFW_FALSE;
   }
   version = (const char *)window->context.GetString(GL_VERSION);
-  printf("asdkfihbadsfkhjasdgbfj\n\n");
   if (!version) {
     if (ctxconfig->client == GLFW_OPENGL_API) {
       _glfwInputError(GLFW_PLATFORM_ERROR,
