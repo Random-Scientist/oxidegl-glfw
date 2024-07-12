@@ -11,26 +11,22 @@
 #define GL_DEPTH_COMPONENT 0x1902
 #define GL_FLOAT 0x1406
 
-static void makeContextCurrentOxideGL(_GLFWwindow *window)
-{
+static void makeContextCurrentOxideGL(_GLFWwindow *window) {
   oxidegl_set_current_context(window->context.oxidegl.ctx);
   _glfwPlatformSetTls(&_glfw.contextSlot, window);
 }
 
-static void swapBuffersOxideGL(_GLFWwindow *window)
-{
+static void swapBuffersOxideGL(_GLFWwindow *window) {
   oxidegl_swap_buffers(window->context.oxidegl.ctx);
 }
 
 static void swapIntervalOxideGL(int interval) {}
 
-static int extensionSupportedOxideGL(const char *extension)
-{
+static int extensionSupportedOxideGL(const char *extension) {
   return GLFW_FALSE;
 }
 
-static GLFWglproc getProcAddressOxideGL(const char *procname)
-{
+static GLFWglproc getProcAddressOxideGL(const char *procname) {
   GLFWproc symbol;
   assert(_glfw.oxidegl.handle);
   symbol = _glfwPlatformGetModuleSymbol(_glfw.oxidegl.handle, procname);
@@ -45,19 +41,18 @@ static void destroyContextOxideGL(_GLFWwindow *window) {}
 
 // Initialize OpenGL support
 //
-GLFWbool _glfwInitOxideGL(void)
-{
+GLFWbool _glfwInitOxideGL(void) {
   if (_glfw.oxidegl.handle)
     return GLFW_TRUE;
   _glfw.oxidegl.handle = _glfwPlatformLoadModule("liboxidegl.dylib");
   assert(_glfw.oxidegl.handle);
 
-  if (_glfw.oxidegl.handle == NULL)
-  {
+  if (_glfw.oxidegl.handle == NULL) {
     _glfwInputError(GLFW_API_UNAVAILABLE,
                     "OxideGL: Failed to load liboxidegl.dylib");
     return GLFW_FALSE;
   }
+  oxidegl_platform_init();
   return GLFW_TRUE;
 }
 
@@ -65,24 +60,20 @@ void _glfwTerminateOxideGL(void) {}
 
 GLFWbool _glfwCreateContextOxideGL(_GLFWwindow *window,
                                    const _GLFWctxconfig *ctxconfig,
-                                   const _GLFWfbconfig *fbconfig)
-{
-  if (ctxconfig->client == GLFW_OPENGL_ES_API)
-  {
+                                   const _GLFWfbconfig *fbconfig) {
+  if (ctxconfig->client == GLFW_OPENGL_ES_API) {
     _glfwInputError(GLFW_API_UNAVAILABLE,
                     "OxideGL: oxideGL does not support GLES");
     return GLFW_FALSE;
   }
 
-  if (ctxconfig->major < 4)
-  {
+  if (ctxconfig->major != 4) {
     _glfwInputError(GLFW_VERSION_UNAVAILABLE,
                     "OxideGL supports OpenGL 4.6 Core only");
     return GLFW_FALSE;
   }
 
-  if (ctxconfig->minor < 6)
-  {
+  if (ctxconfig->minor != 6) {
     _glfwInputError(GLFW_VERSION_UNAVAILABLE,
                     "OxideGL supports OpenGL 4.6 Core only");
     return GLFW_FALSE;
@@ -94,8 +85,7 @@ GLFWbool _glfwCreateContextOxideGL(_GLFWwindow *window,
       oxidegl_create_context(window->ns.view, GL_BGRA, GL_UNSIGNED_INT,
                              GL_DEPTH_COMPONENT, GL_FLOAT, 0, 0);
 
-  if (window->context.oxidegl.ctx == 0)
-  {
+  if (window->context.oxidegl.ctx == 0) {
     _glfwInputError(GLFW_VERSION_UNAVAILABLE,
                     "Failed to create OxideGL Context");
     return GLFW_FALSE;
@@ -115,20 +105,17 @@ GLFWbool _glfwCreateContextOxideGL(_GLFWwindow *window,
 //////                        GLFW native API                       //////
 //////////////////////////////////////////////////////////////////////////
 
-GLFWAPI void *glfwGetOxideGLContext(GLFWwindow *handle)
-{
+GLFWAPI void *glfwGetOxideGLContext(GLFWwindow *handle) {
   _GLFWwindow *window = (_GLFWwindow *)handle;
   _GLFW_REQUIRE_INIT_OR_RETURN(nil);
 
-  if (_glfw.platform.platformID != GLFW_PLATFORM_COCOA)
-  {
+  if (_glfw.platform.platformID != GLFW_PLATFORM_COCOA) {
     _glfwInputError(GLFW_PLATFORM_UNAVAILABLE,
                     "OxideGL: Platform not initialized");
     return nil;
   }
 
-  if (window->context.source != GLFW_NATIVE_CONTEXT_API)
-  {
+  if (window->context.source != GLFW_NATIVE_CONTEXT_API) {
     _glfwInputError(GLFW_NO_WINDOW_CONTEXT, NULL);
     return nil;
   }
