@@ -12,7 +12,11 @@
 #define GL_FLOAT 0x1406
 
 static void makeContextCurrentOxideGL(_GLFWwindow *window) {
-  _glfw.oxidegl.make_context_current(window->context.oxidegl.ctx);
+  if (window) {
+    _glfw.oxidegl.make_context_current(window->context.oxidegl.ctx);
+  } else {
+    _glfw.oxidegl.make_context_current(NULL);
+  }
   _glfwPlatformSetTls(&_glfw.contextSlot, window);
 }
 
@@ -30,7 +34,6 @@ static GLFWglproc getProcAddressOxideGL(const char *procname) {
   GLFWproc symbol;
   assert(_glfw.oxidegl.handle);
   symbol = _glfwPlatformGetModuleSymbol(_glfw.oxidegl.handle, procname);
-  assert(symbol);
   return symbol;
 }
 static void destroyContextOxideGL(_GLFWwindow *window) {}
