@@ -837,7 +837,6 @@ GLFWbool _glfwCreateWindowCocoa(_GLFWwindow *window,
           _glfwFocusWindowCocoa(window);
       }
     }
-    printf("window created\n");
     return GLFW_TRUE;
 
   } // autoreleasepool

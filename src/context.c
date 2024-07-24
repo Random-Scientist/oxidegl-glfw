@@ -498,7 +498,6 @@ GLFWbool _glfwRefreshContextAttribs(_GLFWwindow *window,
     if (window->doublebuffer)
       window->context.swapBuffers(window);
   }
-  printf("makecontextcurrent called\n");
   glfwMakeContextCurrent((GLFWwindow *)previous);
   return GLFW_TRUE;
 }
