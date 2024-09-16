@@ -95,6 +95,10 @@ GLFWbool _glfwCreateContextOxideGL(_GLFWwindow *window,
                     "OxideGL supports OpenGL 4.6 Core only");
     return GLFW_FALSE;
   }
+  if (ctxconfig->share) {
+    _glfwInputError(GLFW_API_UNAVAILABLE,
+                    "OxideGL does not support shared contexts");
+  }
 
   window->context.oxidegl.ctx =
       _glfw.oxidegl.create_context(window->ns.view, GL_BGRA, GL_UNSIGNED_INT,
