@@ -646,7 +646,7 @@ void _glfwTerminateCocoa(void) {
 
     _glfw_free(_glfw.ns.clipboardString);
 
-    _glfwTerminateOxideGL();
+    GLFW_COCOA_GL_PLATFORM_TERMINATE();
     _glfwTerminateEGL();
     _glfwTerminateOSMesa();
 

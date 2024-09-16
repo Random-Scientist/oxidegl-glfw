@@ -57,6 +57,8 @@
 #define GLFW_COCOA_LIBRARY_WINDOW_STATE
 #define GLFW_OXIDEGL_CONTEXT_STATE
 #define GLFW_OXIDEGL_LIBRARY_CONTEXT_STATE
+#define GLFW_NSGL_CONTEXT_STATE
+#define GLFW_NSGL_LIBRARY_CONTEXT_STATE
 #endif
 
 #if defined(_GLFW_WAYLAND)
@@ -147,11 +149,13 @@
 #define GLFW_PLATFORM_CONTEXT_STATE                                            \
   GLFW_WGL_CONTEXT_STATE                                                       \
   GLFW_OXIDEGL_CONTEXT_STATE                                                   \
+  GLFW_NSGL_CONTEXT_STATE                                                      \
   GLFW_GLX_CONTEXT_STATE
 
 #define GLFW_PLATFORM_LIBRARY_CONTEXT_STATE                                    \
   GLFW_WGL_LIBRARY_CONTEXT_STATE                                               \
   GLFW_OXIDEGL_LIBRARY_CONTEXT_STATE                                           \
+  GLFW_NSGL_LIBRARY_CONTEXT_STATE                                              \
   GLFW_GLX_LIBRARY_CONTEXT_STATE
 
 #if defined(_WIN32)

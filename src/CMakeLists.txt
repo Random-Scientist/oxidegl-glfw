@@ -28,11 +28,17 @@ add_custom_target(update_mappings
     VERBATIM)
 
 set_target_properties(update_mappings PROPERTIES FOLDER "GLFW3")
-
-target_compile_definitions(glfw PRIVATE _GLFW_COCOA)
+if (GLFW_BUILD_COCOA)
+    target_compile_definitions(glfw PRIVATE _GLFW_COCOA)
     target_sources(glfw PRIVATE cocoa_platform.h cocoa_joystick.h cocoa_init.m
                                 cocoa_joystick.m cocoa_monitor.m cocoa_window.m
-                                oxidegl_context.c)
+                                )
+    if (GLFW_USE_NSGL)
+        target_compile_definitions(glfw PRIVATE _GLFW_USE_NSGL)
+        target_sources(glfw PRIVATE nsgl_context.m)
+    if (NOT GLFW_USE_NSGL)
+        target_sources(glfw PRIVATE oxidegl_context.c)
+
 
 if (GLFW_BUILD_WIN32)
     target_compile_definitions(glfw PRIVATE _GLFW_WIN32)

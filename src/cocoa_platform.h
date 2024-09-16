@@ -111,13 +111,29 @@ typedef VkResult(APIENTRY *PFN_vkCreateMetalSurfaceEXT)(
 #define GLFW_COCOA_MONITOR_STATE _GLFWmonitorNS ns;
 #define GLFW_COCOA_CURSOR_STATE _GLFWcursorNS ns;
 
-/*
+#ifdef _GLFW_USE_NSGL
 #define GLFW_NSGL_CONTEXT_STATE _GLFWcontextNSGL nsgl;
 #define GLFW_NSGL_LIBRARY_CONTEXT_STATE _GLFWlibraryNSGL nsgl;
-*/
+#define GLFW_OXIDEGL_CONTEXT_STATE
+#define GLFW_OXIDEGL_LIBRARY_CONTEXT_STATE
+#define GLFW_COCOA_GL_PLATFORM_INIT _glfwInitNSGL
+#define GLFW_COCOA_GL_PLATFORM_TERMINATE _glfwTerminateNSGL
+#define GLFW_COCOA_GL_PLATFORM_CREATE_CTX _glfwCreateContextNSGL
+#define GLFW_COCOA_GL_PLATFORM_DESTROY_CTX _glfwDestroyContextNSGL
+#endif
 
+#ifndef _GLFW_USE_NSGL
+#define GLFW_NSGL_CONTEXT_STATE
+#define GLFW_NSGL_LIBRARY_CONTEXT_STATE
 #define GLFW_OXIDEGL_CONTEXT_STATE _GLFWcontext_oxidegl oxidegl;
 #define GLFW_OXIDEGL_LIBRARY_CONTEXT_STATE _GLFWlibrary_oxidegl oxidegl;
+
+#define GLFW_COCOA_GL_PLATFORM_INIT _glfwInitOxideGL
+#define GLFW_COCOA_GL_PLATFORM_TERMINATE _glfwTerminateOxideGL
+#define GLFW_COCOA_GL_PLATFORM_CREATE_CTX _glfwCreateContextOxideGL
+#define GLFW_COCOA_GL_PLATFORM_DESTROY_CTX _glfwDestroyContextOxideGL
+
+#endif
 
 // HIToolbox.framework pointer typedefs
 #define kTISPropertyUnicodeKeyLayoutData                                       \
@@ -335,18 +351,20 @@ float _glfwTransformYCocoa(float y);
 
 void *_glfwLoadLocalVulkanLoaderCocoa(void);
 
+#ifndef _GLFW_USE_NSGL
 GLFWbool _glfwInitOxideGL(void);
 void _glfwTerminateOxideGL(void);
 GLFWbool _glfwCreateContextOxideGL(_GLFWwindow *window,
                                    const _GLFWctxconfig *ctxconfig,
                                    const _GLFWfbconfig *fbconfig);
 void _glfwDestroyContextOxideGL(_GLFWwindow *window);
+#endif
 
-/*
+#ifdef _GLFW_USE_NSGL
 GLFWbool _glfwInitNSGL(void);
 void _glfwTerminateNSGL(void);
 GLFWbool _glfwCreateContextNSGL(_GLFWwindow *window,
                                 const _GLFWctxconfig *ctxconfig,
                                 const _GLFWfbconfig *fbconfig);
 void _glfwDestroyContextNSGL(_GLFWwindow *window);
-*/
+#endif

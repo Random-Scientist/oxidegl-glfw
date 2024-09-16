@@ -207,9 +207,13 @@ static const NSRange kEmptyRange = {NSNotFound, 0};
 
 - (void)windowDidResize:(NSNotification *)notification {
   if (window->context.source == GLFW_NATIVE_CONTEXT_API) {
-    // LOOKHERE
-    // TODO oxidegl window resizing
-    //[window->context.nsgl.object update];
+// LOOKHERE
+#ifdef _GLFW_USE_NSGL
+//[window->context.nsgl.object update];
+#endif
+#ifndef _GLFW_USE_NSGL
+// TODO oxidegl window resizing
+#endif
   }
 
   if (_glfw.ns.disabledCursorWindow == window)
@@ -806,12 +810,12 @@ GLFWbool _glfwCreateWindowCocoa(_GLFWwindow *window,
 
     if (ctxconfig->client != GLFW_NO_API) {
       if (ctxconfig->source == GLFW_NATIVE_CONTEXT_API) {
-        if (!_glfwInitOxideGL()) {
-          printf("failed to initialize OxideGL");
+        if (!GLFW_COCOA_GL_PLATFORM_INIT()) {
+          printf("failed to initialize OpenGL");
           return GLFW_FALSE;
         }
-        if (!_glfwCreateContextOxideGL(window, ctxconfig, fbconfig)) {
-          printf("Failed to create OxideGL Context");
+        if (!GLFW_COCOA_GL_PLATFORM_CREATE_CTX(window, ctxconfig, fbconfig)) {
+          printf("Failed to create GL Context");
           return GLFW_FALSE;
         }
       }
