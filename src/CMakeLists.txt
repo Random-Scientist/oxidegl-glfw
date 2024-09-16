@@ -36,9 +36,11 @@ if (GLFW_BUILD_COCOA)
     if (GLFW_USE_NSGL)
         target_compile_definitions(glfw PRIVATE _GLFW_USE_NSGL)
         target_sources(glfw PRIVATE nsgl_context.m)
+    endif()
     if (NOT GLFW_USE_NSGL)
         target_sources(glfw PRIVATE oxidegl_context.c)
-
+    endif()
+endif()
 
 if (GLFW_BUILD_WIN32)
     target_compile_definitions(glfw PRIVATE _GLFW_WIN32)
