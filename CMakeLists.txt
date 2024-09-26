@@ -20,7 +20,7 @@ option(GLFW_BUILD_TESTS "Build the GLFW test programs" ${GLFW_STANDALONE})
 option(GLFW_BUILD_DOCS "Build the GLFW documentation" ON)
 option(GLFW_INSTALL "Generate installation target" ON)
 option(GLFW_BUILD_COCOA "Build with Cocoa by default" ON)
-option(GLFW_USE_NSGL "Use NSGL instead of OxideGL" ON)
+option(GLFW_USE_NSGL "Use NSGL instead of OxideGL" OFF)
 
 include(GNUInstallDirs)
 include(CMakeDependentOption)
