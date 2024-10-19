@@ -36,7 +36,9 @@ static GLFWglproc getProcAddressOxideGL(const char *procname) {
   symbol = _glfwPlatformGetModuleSymbol(_glfw.oxidegl.handle, procname);
   return symbol;
 }
-static void destroyContextOxideGL(_GLFWwindow *window) {}
+static void destroyContextOxideGL(_GLFWwindow *window) {
+  oxidegl_destroy_context(window->context.oxidegl.ctx);
+}
 
 //////////////////////////////////////////////////////////////////////////
 //////                       GLFW internal API                      //////
