@@ -163,19 +163,22 @@ typedef struct _GLFWlibraryNSGL {
 // OxideGL-specific per-context data
 //
 typedef struct _GLFWcontext_oxidegl {
+  // Option<NonNull<oxidegl::Context>>
   void *ctx;
 } _GLFWcontext_oxidegl;
 #define OXIDEGLCREATECTXPROC                                                   \
-  void *(*)(void *, void *, GLenum, GLenum, GLenum, GLenum, GLenum, GLenum)
+  void *(*)(void *, GLenum, GLenum, GLenum, GLenum, GLenum, GLenum)
 // OxideGL-specific global data
 //
 typedef struct _GLFWStatic_oxidegl {
+  // dlopen handle to liboxidegl
   void *handle;
+
   void (*platform_init)();
   void (*make_context_current)(void *ctx);
   void (*destroy_context)(void *ctx);
   void (*swap_buffers)(void *ctx);
-  void *(*create_context)(void *view, void *window, GLenum format, GLenum type,
+  void *(*create_context)(void *view, GLenum format, GLenum type,
                           GLenum depth_format, GLenum depth_type,
                           GLenum stencil_format, GLenum stencil_type);
 } _GLFWlibrary_oxidegl;

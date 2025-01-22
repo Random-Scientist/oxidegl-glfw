@@ -106,9 +106,9 @@ GLFWbool _glfwCreateContextOxideGL(_GLFWwindow *window,
     _glfwInputError(GLFW_API_UNAVAILABLE,
                     "OxideGL does not support shared contexts");
   }
-  window->context.oxidegl.ctx = _glfw.oxidegl.create_context(
-      window->ns.view, window->ns.object, GL_BGRA, GL_UNSIGNED_INT,
-      GL_DEPTH_COMPONENT, GL_FLOAT, 0, 0);
+  window->context.oxidegl.ctx =
+      _glfw.oxidegl.create_context(window->ns.view, GL_BGRA, GL_UNSIGNED_INT,
+                                   GL_DEPTH_COMPONENT, GL_FLOAT, 0, 0);
 
   if (window->context.oxidegl.ctx == 0) {
     _glfwInputError(GLFW_VERSION_UNAVAILABLE,
