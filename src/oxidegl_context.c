@@ -2,7 +2,6 @@
 #include "internal.h"
 #include "oxidegl_ctx.h"
 
-#include <math.h>
 #include <stdio.h>
 #include <unistd.h>
 
@@ -49,12 +48,12 @@ static void destroyContextOxideGL(_GLFWwindow *window) {
 GLFWbool _glfwInitOxideGL(void) {
   if (_glfw.oxidegl.handle)
     return GLFW_TRUE;
-  _glfw.oxidegl.handle = _glfwPlatformLoadModule("liboxidegl.dylib");
+  _glfw.oxidegl.handle = _glfwPlatformLoadModule("liboxidegl_c.dylib");
   assert(_glfw.oxidegl.handle);
 
   if (_glfw.oxidegl.handle == NULL) {
     _glfwInputError(GLFW_API_UNAVAILABLE,
-                    "OxideGL: Failed to load liboxidegl.dylib");
+                    "OxideGL: Failed to load liboxidegl_c.dylib");
     return GLFW_FALSE;
   }
   _glfw.oxidegl.platform_init = getProcAddressOxideGL("oxidegl_platform_init");
